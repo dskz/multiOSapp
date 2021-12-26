@@ -1,0 +1,20 @@
+    - name: Install httpd package
+      apt: name=apache2 update_cache=yes state=latest
+    - name: Install unzip
+      apt:
+        name: unzip
+        state: present
+    - name: install a  template
+      get_url:
+        url: https://www.free-css.com/assets/files/free-css-templates/download/page273/moon.zip
+        dest: /tmp/
+    - name: Unarchive template files
+      unarchive:
+        src: /tmp/moon.zip
+        dest: /tmp/
+        remote_src: yes      
+    - name: move files to http 
+      copy:
+        src: /tmp/moon/
+        dest: /var/www/html/      
+        remote_src: yes

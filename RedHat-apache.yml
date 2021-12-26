@@ -1,0 +1,33 @@
+    - name: Disable SElinux
+      selinux:
+        state: disabled
+    - name: Install httpd package
+      yum: 
+        name: httpd
+        state: latest
+    - name: Start httpd
+      systemd:
+        name: httpd
+        state: started
+    - name: Enable httpd
+      systemd:
+        name: httpd
+        enabled: yes
+    - name: Install unzip
+      yum:
+        name: unzip
+        state: present
+    - name: install a  template
+      get_url:
+        url: https://www.free-css.com/assets/files/free-css-templates/download/page273/moon.zip
+        dest: /tmp/
+    - name: Unarchive template files
+      unarchive:
+        src: /tmp/moon.zip
+        dest: /tmp/
+        remote_src: yes      
+    - name: move files to http 
+      copy:
+        src: /tmp/moon/
+        dest: /var/www/html/      
+        remote_src: yes
